@@ -1,8 +1,10 @@
-FROM mariadb
+FROM mariadb:latest
 
-VOLUME ["/var/lib/mysql"]
+# Tambahkan konfigurasi tambahan jika diperlukan
+COPY my.cnf /etc/mysql/conf.d/
 
-RUN sed -i "s/^user.*/user = root/g" /etc/mysql/my.cnf
+# Pastikan konfigurasi baru diterapkan dengan benar
+RUN chmod 644 /etc/mysql/conf.d/my.cnf
 
-RUN chown -R mysql /var/lib/mysql
-RUN chgrp -R mysql /var/lib/mysql
+# Expose port default MariaDB
+EXPOSE 3306

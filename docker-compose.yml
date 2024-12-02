@@ -11,7 +11,7 @@ services:
     working_dir: /go/src/go-mysql-rest-api
     command: go run main.go
     ports:
-      - "3000:3000" # http
+      - "3000:3000" 
     links:
       - db
   adminer:
@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: docker/db/Dockerfile
-    image: my-mysql:1.0
+    image: mariadb:10.2
     container_name: database.dev
     hostname: database.dev
     ports:
@@ -31,10 +31,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: pasaribu
       MYSQL_DATABASE: shopee
-    # sync folders. MySQL data is stored outside container so that rebuilding doesn't clear db.
-    # folder is at workspace root.
     volumes:
-      #- ../../_local_mysql_data:/var/lib/mysql
-      #- ./shopee.sql:/tmp/shopee.sql
-      #- ./import.sh:/tmp/import.sh
       - ./mysql_init:/docker-entrypoint-initdb.d
+      - ./my.cnf:/etc/mysql/my.cnf

@@ -1,10 +1,9 @@
 # Telling to use Docker's golang ready image
-FROM golang:onbuild
+FROM golang:1.20
+
 EXPOSE 8080
 
-RUN apt-get update && apt-get install -y mysql-client
-RUN go get -u github.com/go-sql-driver/mysql
-RUN go get -u github.com/boantp/go-mysql-rest-api
+RUN apt-get update && apt-get install -y default-mysql-client
 # ADD . /home
 
 # WORKDIR /home
